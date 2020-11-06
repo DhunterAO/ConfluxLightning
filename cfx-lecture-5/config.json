@@ -1,4 +1,8 @@
 {
-  "main": "./contracts/CourseCoin.sol",
-  "deploy": "./build/contracts/CourseCoin.json"
+  "main": "./contracts/TransferFactory.sol",
+  "deploy": "./build/contracts/TransferFactory.json",
+  "compilers": {
+    "cfxtruffle": "0.0.8",
+    "solc": "0.7.1"
+  }
 }

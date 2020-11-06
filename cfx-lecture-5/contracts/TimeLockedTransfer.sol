@@ -13,6 +13,9 @@ contract TimeLockedTransfer {
     event CFXWithdraw(uint256 amount);
     event CoinWithdraw(uint256 amount);
 
+    event CFXCancel(uint256 amount);
+    event CoinCancel(uint256 amount);
+
     constructor(address sender, address receiver, uint256 lockTimeSec) {
         _sender = sender;
         _receiver = receiver;
@@ -49,5 +52,23 @@ contract TimeLockedTransfer {
         uint256 amount = coin.balanceOf(address(this));
         coin.transfer(_receiver, amount);
         emit CoinWithdraw(amount);
+    }
+
+    function cancelCFX() external {
+        require(msg.sender == _sender, "TLT: Unauthorized");
+        uint256 amount = address(this).balance;
+        msg.sender.transfer(amount);
+        emit CFXCancel(amount);
+    }
+
+    function CancelCoin(address coinContract) external {
+        // The sender will cancel the transfer and withdraw the tokens as any time
+        // Unless the receiver already withdraws the tokens before
+        require(msg.sender == _sender, "TLT: Unauthorized");
+
+        IStandardCoin coin = IStandardCoin(coinContract);
+        uint256 amount = coin.balanceOf(address(this));
+        coin.transfer(_sender, amount);
+        emit CoinCancel(amount);
     }
 }

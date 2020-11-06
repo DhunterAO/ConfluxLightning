@@ -14,9 +14,9 @@ contract CourseCoin is IStandardCoin { // inheritance / implementing an interfac
 
     event Transfer(address from, address to, uint256 amount);
 
-    constructor(uint256 totalSupply) {
-        _name = "Conflux UMA Token";
-        _symbol = "UMA";
+    constructor(string memory name, string memory symbol, uint256 totalSupply) {
+        _name = name;
+        _symbol = symbol;
         _totalSupply = totalSupply;
 
         // add all tokens to creator
